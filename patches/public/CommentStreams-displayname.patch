@@ -1,0 +1,32 @@
+From 3792e7c0d5d6fde6398fa767ed908ccdd9590901 Mon Sep 17 00:00:00 2001
+From: YTFGolf <77898443+YTFGolf@users.noreply.github.com>
+Date: Sat, 3 Oct 2026 00:15:11 +0100
+Subject: [PATCH] Don't bother getting user's display title/real name
+
+---
+ includes/CommentSerializer.php | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/includes/CommentSerializer.php b/includes/CommentSerializer.php
+index 4b2fadd..3fc2019 100644
+--- a/includes/CommentSerializer.php
++++ b/includes/CommentSerializer.php
+@@ -170,6 +170,15 @@ class CommentSerializer {
+ 		$userpage = Title::makeTitle( NS_USER, $user->getName() );
+ 		$displayname = '';
+ 
++		if ( true ) {
++			$displayname = $user->getName();
++			if ( $linked && $userpage->exists() ) {
++				return $this->linkRenderer->makeLink( $userpage, $displayname );
++			} else {
++				return $displayname;
++			}
++		}
++
+ 		if ( $this->userRealNamePropertyName !== null ) {
+ 			$displayname = $this->smwInterface->getUserProperty(
+ 				$user,
+-- 
+2.43.0
+
